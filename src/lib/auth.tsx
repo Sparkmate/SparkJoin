@@ -21,6 +21,25 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // Cache duration in seconds
+    },
+  },
+  user: {
+    additionalFields: {
+      pagesRead: {
+        type: "string[]",
+        required: false,
+        defaultValue: [],
+      },
+      expiresAt: {
+        type: "date",
+        required: false,
+      },
+    },
+  },
   plugins: [
     magicLink({
       sendMagicLink: async ({ email, url }) => {

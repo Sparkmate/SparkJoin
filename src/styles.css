@@ -127,6 +127,7 @@
 
 @theme inline {
   --color-brand-primary: var(--brand-accent);
+  --color-brand-accent: var(--brand-accent);
   --color-brand-secondary: var(--brand-secondary);
   --color-brand-bg: var(--brand-bg);
   --color-brand-surface: var(--brand-surface);

@@ -1,68 +1,86 @@
-import { useRouteContext } from "@tanstack/react-router";
-import type * as React from "react";
-import { DownloadDataRoomButton } from "@/components/blocks/download-data-room-button";
-import { WhatsNewSidebarCard } from "@/components/blocks/whats-new-sidebar-card";
-import { NavMain } from "@/components/nav/nav-main";
-import { NavUser } from "@/components/nav/nav-user";
+import { useQuery } from "@tanstack/react-query";
+import { useRouteContext, useRouterState } from "@tanstack/react-router";
+import * as React from "react";
+import { NavMain } from "#/components/nav/nav-main";
+import { NavUser } from "#/components/nav/nav-user";
+import { useTRPC } from "#/integrations/trpc/react";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { navMain } from "@/config/navigation";
+import { navGroups } from "@/config/navigation";
+import { Button } from "./ui/button";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { toggleSidebar } = useSidebar();
   const { user } = useRouteContext({ from: "/_private" });
+  const trpc = useTRPC();
+  const { data: readPagesData } = useQuery(trpc.user.getReadPages.queryOptions());
+  const { toggleSidebar } = useSidebar();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAdmin =
+    user?.email === "morgan@sparkmate.com" ||
+    user?.email === "maxime@sparkmate.com" ||
+    user?.email === "ampy@sparkmate.com" ||
+    user?.email === "yago@sparkmate.com";
+
+  const visibleGroups = React.useMemo(
+    () => navGroups.filter((group) => group.title !== "Admin" || isAdmin),
+    [isAdmin]
+  );
+
+  const contentPages = React.useMemo(
+    () =>
+      navGroups
+        .filter(
+          (group) =>
+            group.title !== "Dashboard & Metrics" && group.title !== "Admin"
+        )
+        .flatMap((group) => group.items),
+    []
+  );
+  const totalContentPages = contentPages.length;
+  const readContentPages =
+    readPagesData?.pagesRead?.length ?? user?.pagesRead?.length ?? 0;
+
+  const progressPercentage =
+    totalContentPages > 0 ? (readContentPages / totalContentPages) * 100 : 0;
+
   return (
-    <Sidebar collapsible="icon" variant="sidebar" {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              asChild
-              onClick={() => toggleSidebar()}
-              className="cursor-pointer"
-            >
-              <div>
-                <div className=" text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <img
-                    src="/logo-yellow.svg"
-                    alt="Sparkmate"
-                    className="size-6"
-                  />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Sparkmate Hub</span>
-                </div>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader className="pt-4 ">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggleSidebar}
+          className="w-full flex items-center justify-center px-2 py-2 cursor-pointer hover:border-none hover:bg-transparent"
+        >
+          <img
+            src="https://cdn.brandfetch.io/id0nvnoUuq/theme/light/logo.svg?c=1bxkv1dyj3uktf70hkd0yurufsb0MtP0E4s"
+            alt="Sparkmate Logo"
+            className="h-6 object-contain group-data-[collapsible=icon]:hidden"
+          />
+          <img
+            src="https://cdn.brandfetch.io/id0nvnoUuq/theme/light/symbol.svg?c=1bxkv1dyj3uktf70hkd0yurufsb0MtP0E4s"
+            alt="Sparkmate Symbol"
+            className="hidden h-8 w-8 object-contain group-data-[collapsible=icon]:block"
+          />
+        </Button>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navMain.filter((item) => !item.hidden)} />
+        <NavMain groups={visibleGroups} pathname={pathname} />
       </SidebarContent>
-      <SidebarFooter className="flex flex-col gap-4 items-stretch">
-        <WhatsNewSidebarCard />
-        <DownloadDataRoomButton
-          variant="secondary"
-          label="Download Financial Models"
-        />
+      <SidebarFooter className="border-t border-brand-dark">
         <NavUser
-          user={{
-            name: user.name,
-            email: user.email,
-            avatar: user.image || "",
-          }}
+          readContentPages={readContentPages}
+          totalContentPages={totalContentPages}
+          progressPercentage={progressPercentage}
         />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

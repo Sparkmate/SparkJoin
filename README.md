@@ -65,7 +65,7 @@ It is the same process as [Neon Launchpad](https://neon.new).
 Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 
 ```bash
-pnpm dlx shadcn@latest add button
+bunx --bun shadcn@latest add button
 ```
 
 

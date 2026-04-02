@@ -1,28 +1,58 @@
-import type { ReactNode } from 'react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import superjson from 'superjson'
-import { createTRPCClient, httpBatchStreamLink } from '@trpc/client'
-import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query'
-
-import type { TRPCRouter } from '#/integrations/trpc/router'
-import { TRPCProvider } from '#/integrations/trpc/react'
+import { QueryClient } from "@tanstack/react-query";
+import { createServerOnlyFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
+import { createTRPCClient, httpBatchStreamLink } from "@trpc/client";
+import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import type { ReactNode } from "react";
+import superjson from "superjson";
+import { TRPCProvider } from "#/integrations/trpc/react";
+import type { TRPCRouter } from "#/integrations/trpc/router";
 
 function getUrl() {
   const base = (() => {
-    if (typeof window !== 'undefined') return ''
-    return `http://localhost:${process.env.PORT ?? 3000}`
-  })()
-  return `${base}/api/trpc`
+    if (typeof window !== "undefined") return "";
+    // Server-side: in production (e.g. Vercel) localhost is not available.
+    // Use the deployment's public URL so SSR/loaders can call the API.
+    const publicUrl =
+      process.env.PUBLIC_APP_URL ??
+      process.env.BETTER_AUTH_URL ??
+      (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : undefined);
+    if (publicUrl) return publicUrl.replace(/\/$/, "");
+    return `http://localhost:${process.env.PORT ?? 3000}`;
+  })();
+  return `${base}/api/trpc`;
 }
+
+const getHeaders = createServerOnlyFn(() => {
+  const headers = getRequestHeaders();
+
+  const cookie = headers.get("cookie");
+  return cookie ? { cookie } : {};
+});
 
 export const trpcClient = createTRPCClient<TRPCRouter>({
   links: [
     httpBatchStreamLink({
       transformer: superjson,
       url: getUrl(),
+      headers() {
+        if (typeof window !== "undefined") {
+          return {};
+        }
+        return getHeaders();
+      },
     }),
   ],
-})
+});
+
+let context:
+  | {
+      queryClient: QueryClient;
+      trpc: ReturnType<typeof createTRPCOptionsProxy<TRPCRouter>>;
+    }
+  | undefined;
 
 export function getContext() {
   const queryClient = new QueryClient({
@@ -30,32 +60,31 @@ export function getContext() {
       dehydrate: { serializeData: superjson.serialize },
       hydrate: { deserializeData: superjson.deserialize },
     },
-  })
+  });
 
   const serverHelpers = createTRPCOptionsProxy({
     client: trpcClient,
     queryClient: queryClient,
-  })
-  const context = {
+  });
+  context = {
     queryClient,
     trpc: serverHelpers,
-  }
+  };
 
-  return context
+  return context;
 }
 
 export default function TanstackQueryProvider({
   children,
-  context,
 }: {
-  children: ReactNode
-  context: ReturnType<typeof getContext>
+  children: ReactNode;
+  context: ReturnType<typeof getContext>;
 }) {
-  const { queryClient } = context
+  const { queryClient } = getContext();
 
   return (
     <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
       {children}
     </TRPCProvider>
-  )
+  );
 }

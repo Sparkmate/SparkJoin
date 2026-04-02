@@ -12,10 +12,29 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as PrivateRouteImport } from './routes/_private'
 import { Route as PrivateIndexRouteImport } from './routes/_private/index'
+import { Route as ApiCandidateDocumentsRouteImport } from './routes/api/candidate-documents'
 import { Route as PublicLayoutRouteImport } from './routes/_public/_layout'
+import { Route as PrivateProfileRouteImport } from './routes/_private/profile'
+import { Route as PrivateIncentiveIndexRouteImport } from './routes/_private/incentive/index'
+import { Route as PrivateGuidesIndexRouteImport } from './routes/_private/guides/index'
+import { Route as PrivateCultureIndexRouteImport } from './routes/_private/culture/index'
+import { Route as PrivateBrandIndexRouteImport } from './routes/_private/brand/index'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as PublicLayoutLoginRouteImport } from './routes/_public/_layout.login'
+import { Route as PrivateIncentiveSchemeRouteImport } from './routes/_private/incentive/scheme'
+import { Route as PrivateGuidesTimeOffPolicyRouteImport } from './routes/_private/guides/time-off-policy'
+import { Route as PrivateGuidesRemotePolicyRouteImport } from './routes/_private/guides/remote-policy'
+import { Route as PrivateGuidesBeltSystemRouteImport } from './routes/_private/guides/belt-system'
+import { Route as PrivateGuidesBarRaiserMeetingRouteImport } from './routes/_private/guides/bar-raiser-meeting'
+import { Route as PrivateCultureVisionRouteImport } from './routes/_private/culture/vision'
+import { Route as PrivateCultureReadingsRouteImport } from './routes/_private/culture/readings'
+import { Route as PrivateCulturePrinciplesRouteImport } from './routes/_private/culture/principles'
+import { Route as PrivateCultureMasterPlanRouteImport } from './routes/_private/culture/master-plan'
+import { Route as PrivateCultureFormulasRouteImport } from './routes/_private/culture/formulas'
+import { Route as PrivateCultureFailuresRouteImport } from './routes/_private/culture/failures'
+import { Route as PrivateBrandBibleRouteImport } from './routes/_private/brand/bible'
+import { Route as PrivateBrandAssetsRouteImport } from './routes/_private/brand/assets'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -30,9 +49,39 @@ const PrivateIndexRoute = PrivateIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PrivateRoute,
 } as any)
+const ApiCandidateDocumentsRoute = ApiCandidateDocumentsRouteImport.update({
+  id: '/api/candidate-documents',
+  path: '/api/candidate-documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublicLayoutRoute = PublicLayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => PublicRoute,
+} as any)
+const PrivateProfileRoute = PrivateProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateIncentiveIndexRoute = PrivateIncentiveIndexRouteImport.update({
+  id: '/incentive/',
+  path: '/incentive/',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateGuidesIndexRoute = PrivateGuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateCultureIndexRoute = PrivateCultureIndexRouteImport.update({
+  id: '/culture/',
+  path: '/culture/',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateBrandIndexRoute = PrivateBrandIndexRouteImport.update({
+  id: '/brand/',
+  path: '/brand/',
+  getParentRoute: () => PrivateRoute,
 } as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
@@ -49,48 +98,241 @@ const PublicLayoutLoginRoute = PublicLayoutLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => PublicLayoutRoute,
 } as any)
+const PrivateIncentiveSchemeRoute = PrivateIncentiveSchemeRouteImport.update({
+  id: '/incentive/scheme',
+  path: '/incentive/scheme',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateGuidesTimeOffPolicyRoute =
+  PrivateGuidesTimeOffPolicyRouteImport.update({
+    id: '/guides/time-off-policy',
+    path: '/guides/time-off-policy',
+    getParentRoute: () => PrivateRoute,
+  } as any)
+const PrivateGuidesRemotePolicyRoute =
+  PrivateGuidesRemotePolicyRouteImport.update({
+    id: '/guides/remote-policy',
+    path: '/guides/remote-policy',
+    getParentRoute: () => PrivateRoute,
+  } as any)
+const PrivateGuidesBeltSystemRoute = PrivateGuidesBeltSystemRouteImport.update({
+  id: '/guides/belt-system',
+  path: '/guides/belt-system',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateGuidesBarRaiserMeetingRoute =
+  PrivateGuidesBarRaiserMeetingRouteImport.update({
+    id: '/guides/bar-raiser-meeting',
+    path: '/guides/bar-raiser-meeting',
+    getParentRoute: () => PrivateRoute,
+  } as any)
+const PrivateCultureVisionRoute = PrivateCultureVisionRouteImport.update({
+  id: '/culture/vision',
+  path: '/culture/vision',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateCultureReadingsRoute = PrivateCultureReadingsRouteImport.update({
+  id: '/culture/readings',
+  path: '/culture/readings',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateCulturePrinciplesRoute =
+  PrivateCulturePrinciplesRouteImport.update({
+    id: '/culture/principles',
+    path: '/culture/principles',
+    getParentRoute: () => PrivateRoute,
+  } as any)
+const PrivateCultureMasterPlanRoute =
+  PrivateCultureMasterPlanRouteImport.update({
+    id: '/culture/master-plan',
+    path: '/culture/master-plan',
+    getParentRoute: () => PrivateRoute,
+  } as any)
+const PrivateCultureFormulasRoute = PrivateCultureFormulasRouteImport.update({
+  id: '/culture/formulas',
+  path: '/culture/formulas',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateCultureFailuresRoute = PrivateCultureFailuresRouteImport.update({
+  id: '/culture/failures',
+  path: '/culture/failures',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateBrandBibleRoute = PrivateBrandBibleRouteImport.update({
+  id: '/brand/bible',
+  path: '/brand/bible',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateBrandAssetsRoute = PrivateBrandAssetsRouteImport.update({
+  id: '/brand/assets',
+  path: '/brand/assets',
+  getParentRoute: () => PrivateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PrivateIndexRoute
+  '/profile': typeof PrivateProfileRoute
+  '/api/candidate-documents': typeof ApiCandidateDocumentsRoute
+  '/brand/assets': typeof PrivateBrandAssetsRoute
+  '/brand/bible': typeof PrivateBrandBibleRoute
+  '/culture/failures': typeof PrivateCultureFailuresRoute
+  '/culture/formulas': typeof PrivateCultureFormulasRoute
+  '/culture/master-plan': typeof PrivateCultureMasterPlanRoute
+  '/culture/principles': typeof PrivateCulturePrinciplesRoute
+  '/culture/readings': typeof PrivateCultureReadingsRoute
+  '/culture/vision': typeof PrivateCultureVisionRoute
+  '/guides/bar-raiser-meeting': typeof PrivateGuidesBarRaiserMeetingRoute
+  '/guides/belt-system': typeof PrivateGuidesBeltSystemRoute
+  '/guides/remote-policy': typeof PrivateGuidesRemotePolicyRoute
+  '/guides/time-off-policy': typeof PrivateGuidesTimeOffPolicyRoute
+  '/incentive/scheme': typeof PrivateIncentiveSchemeRoute
   '/login': typeof PublicLayoutLoginRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/brand/': typeof PrivateBrandIndexRoute
+  '/culture/': typeof PrivateCultureIndexRoute
+  '/guides/': typeof PrivateGuidesIndexRoute
+  '/incentive/': typeof PrivateIncentiveIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PrivateIndexRoute
+  '/profile': typeof PrivateProfileRoute
+  '/api/candidate-documents': typeof ApiCandidateDocumentsRoute
+  '/brand/assets': typeof PrivateBrandAssetsRoute
+  '/brand/bible': typeof PrivateBrandBibleRoute
+  '/culture/failures': typeof PrivateCultureFailuresRoute
+  '/culture/formulas': typeof PrivateCultureFormulasRoute
+  '/culture/master-plan': typeof PrivateCultureMasterPlanRoute
+  '/culture/principles': typeof PrivateCulturePrinciplesRoute
+  '/culture/readings': typeof PrivateCultureReadingsRoute
+  '/culture/vision': typeof PrivateCultureVisionRoute
+  '/guides/bar-raiser-meeting': typeof PrivateGuidesBarRaiserMeetingRoute
+  '/guides/belt-system': typeof PrivateGuidesBeltSystemRoute
+  '/guides/remote-policy': typeof PrivateGuidesRemotePolicyRoute
+  '/guides/time-off-policy': typeof PrivateGuidesTimeOffPolicyRoute
+  '/incentive/scheme': typeof PrivateIncentiveSchemeRoute
   '/login': typeof PublicLayoutLoginRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/brand': typeof PrivateBrandIndexRoute
+  '/culture': typeof PrivateCultureIndexRoute
+  '/guides': typeof PrivateGuidesIndexRoute
+  '/incentive': typeof PrivateIncentiveIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_private': typeof PrivateRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
+  '/_private/profile': typeof PrivateProfileRoute
   '/_public/_layout': typeof PublicLayoutRouteWithChildren
+  '/api/candidate-documents': typeof ApiCandidateDocumentsRoute
   '/_private/': typeof PrivateIndexRoute
+  '/_private/brand/assets': typeof PrivateBrandAssetsRoute
+  '/_private/brand/bible': typeof PrivateBrandBibleRoute
+  '/_private/culture/failures': typeof PrivateCultureFailuresRoute
+  '/_private/culture/formulas': typeof PrivateCultureFormulasRoute
+  '/_private/culture/master-plan': typeof PrivateCultureMasterPlanRoute
+  '/_private/culture/principles': typeof PrivateCulturePrinciplesRoute
+  '/_private/culture/readings': typeof PrivateCultureReadingsRoute
+  '/_private/culture/vision': typeof PrivateCultureVisionRoute
+  '/_private/guides/bar-raiser-meeting': typeof PrivateGuidesBarRaiserMeetingRoute
+  '/_private/guides/belt-system': typeof PrivateGuidesBeltSystemRoute
+  '/_private/guides/remote-policy': typeof PrivateGuidesRemotePolicyRoute
+  '/_private/guides/time-off-policy': typeof PrivateGuidesTimeOffPolicyRoute
+  '/_private/incentive/scheme': typeof PrivateIncentiveSchemeRoute
   '/_public/_layout/login': typeof PublicLayoutLoginRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/_private/brand/': typeof PrivateBrandIndexRoute
+  '/_private/culture/': typeof PrivateCultureIndexRoute
+  '/_private/guides/': typeof PrivateGuidesIndexRoute
+  '/_private/incentive/': typeof PrivateIncentiveIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/api/auth/$' | '/api/trpc/$'
+  fullPaths:
+    | '/'
+    | '/profile'
+    | '/api/candidate-documents'
+    | '/brand/assets'
+    | '/brand/bible'
+    | '/culture/failures'
+    | '/culture/formulas'
+    | '/culture/master-plan'
+    | '/culture/principles'
+    | '/culture/readings'
+    | '/culture/vision'
+    | '/guides/bar-raiser-meeting'
+    | '/guides/belt-system'
+    | '/guides/remote-policy'
+    | '/guides/time-off-policy'
+    | '/incentive/scheme'
+    | '/login'
+    | '/api/auth/$'
+    | '/api/trpc/$'
+    | '/brand/'
+    | '/culture/'
+    | '/guides/'
+    | '/incentive/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/api/auth/$' | '/api/trpc/$'
+  to:
+    | '/'
+    | '/profile'
+    | '/api/candidate-documents'
+    | '/brand/assets'
+    | '/brand/bible'
+    | '/culture/failures'
+    | '/culture/formulas'
+    | '/culture/master-plan'
+    | '/culture/principles'
+    | '/culture/readings'
+    | '/culture/vision'
+    | '/guides/bar-raiser-meeting'
+    | '/guides/belt-system'
+    | '/guides/remote-policy'
+    | '/guides/time-off-policy'
+    | '/incentive/scheme'
+    | '/login'
+    | '/api/auth/$'
+    | '/api/trpc/$'
+    | '/brand'
+    | '/culture'
+    | '/guides'
+    | '/incentive'
   id:
     | '__root__'
     | '/_private'
     | '/_public'
+    | '/_private/profile'
     | '/_public/_layout'
+    | '/api/candidate-documents'
     | '/_private/'
+    | '/_private/brand/assets'
+    | '/_private/brand/bible'
+    | '/_private/culture/failures'
+    | '/_private/culture/formulas'
+    | '/_private/culture/master-plan'
+    | '/_private/culture/principles'
+    | '/_private/culture/readings'
+    | '/_private/culture/vision'
+    | '/_private/guides/bar-raiser-meeting'
+    | '/_private/guides/belt-system'
+    | '/_private/guides/remote-policy'
+    | '/_private/guides/time-off-policy'
+    | '/_private/incentive/scheme'
     | '/_public/_layout/login'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/_private/brand/'
+    | '/_private/culture/'
+    | '/_private/guides/'
+    | '/_private/incentive/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   PrivateRoute: typeof PrivateRouteWithChildren
   PublicRoute: typeof PublicRouteWithChildren
+  ApiCandidateDocumentsRoute: typeof ApiCandidateDocumentsRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
@@ -118,12 +360,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateIndexRouteImport
       parentRoute: typeof PrivateRoute
     }
+    '/api/candidate-documents': {
+      id: '/api/candidate-documents'
+      path: '/api/candidate-documents'
+      fullPath: '/api/candidate-documents'
+      preLoaderRoute: typeof ApiCandidateDocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_public/_layout': {
       id: '/_public/_layout'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof PublicLayoutRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_private/profile': {
+      id: '/_private/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof PrivateProfileRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/incentive/': {
+      id: '/_private/incentive/'
+      path: '/incentive'
+      fullPath: '/incentive/'
+      preLoaderRoute: typeof PrivateIncentiveIndexRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/guides/': {
+      id: '/_private/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof PrivateGuidesIndexRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/culture/': {
+      id: '/_private/culture/'
+      path: '/culture'
+      fullPath: '/culture/'
+      preLoaderRoute: typeof PrivateCultureIndexRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/brand/': {
+      id: '/_private/brand/'
+      path: '/brand'
+      fullPath: '/brand/'
+      preLoaderRoute: typeof PrivateBrandIndexRouteImport
+      parentRoute: typeof PrivateRoute
     }
     '/api/trpc/$': {
       id: '/api/trpc/$'
@@ -146,15 +430,142 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLayoutLoginRouteImport
       parentRoute: typeof PublicLayoutRoute
     }
+    '/_private/incentive/scheme': {
+      id: '/_private/incentive/scheme'
+      path: '/incentive/scheme'
+      fullPath: '/incentive/scheme'
+      preLoaderRoute: typeof PrivateIncentiveSchemeRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/guides/time-off-policy': {
+      id: '/_private/guides/time-off-policy'
+      path: '/guides/time-off-policy'
+      fullPath: '/guides/time-off-policy'
+      preLoaderRoute: typeof PrivateGuidesTimeOffPolicyRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/guides/remote-policy': {
+      id: '/_private/guides/remote-policy'
+      path: '/guides/remote-policy'
+      fullPath: '/guides/remote-policy'
+      preLoaderRoute: typeof PrivateGuidesRemotePolicyRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/guides/belt-system': {
+      id: '/_private/guides/belt-system'
+      path: '/guides/belt-system'
+      fullPath: '/guides/belt-system'
+      preLoaderRoute: typeof PrivateGuidesBeltSystemRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/guides/bar-raiser-meeting': {
+      id: '/_private/guides/bar-raiser-meeting'
+      path: '/guides/bar-raiser-meeting'
+      fullPath: '/guides/bar-raiser-meeting'
+      preLoaderRoute: typeof PrivateGuidesBarRaiserMeetingRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/culture/vision': {
+      id: '/_private/culture/vision'
+      path: '/culture/vision'
+      fullPath: '/culture/vision'
+      preLoaderRoute: typeof PrivateCultureVisionRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/culture/readings': {
+      id: '/_private/culture/readings'
+      path: '/culture/readings'
+      fullPath: '/culture/readings'
+      preLoaderRoute: typeof PrivateCultureReadingsRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/culture/principles': {
+      id: '/_private/culture/principles'
+      path: '/culture/principles'
+      fullPath: '/culture/principles'
+      preLoaderRoute: typeof PrivateCulturePrinciplesRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/culture/master-plan': {
+      id: '/_private/culture/master-plan'
+      path: '/culture/master-plan'
+      fullPath: '/culture/master-plan'
+      preLoaderRoute: typeof PrivateCultureMasterPlanRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/culture/formulas': {
+      id: '/_private/culture/formulas'
+      path: '/culture/formulas'
+      fullPath: '/culture/formulas'
+      preLoaderRoute: typeof PrivateCultureFormulasRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/culture/failures': {
+      id: '/_private/culture/failures'
+      path: '/culture/failures'
+      fullPath: '/culture/failures'
+      preLoaderRoute: typeof PrivateCultureFailuresRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/brand/bible': {
+      id: '/_private/brand/bible'
+      path: '/brand/bible'
+      fullPath: '/brand/bible'
+      preLoaderRoute: typeof PrivateBrandBibleRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/brand/assets': {
+      id: '/_private/brand/assets'
+      path: '/brand/assets'
+      fullPath: '/brand/assets'
+      preLoaderRoute: typeof PrivateBrandAssetsRouteImport
+      parentRoute: typeof PrivateRoute
+    }
   }
 }
 
 interface PrivateRouteChildren {
+  PrivateProfileRoute: typeof PrivateProfileRoute
   PrivateIndexRoute: typeof PrivateIndexRoute
+  PrivateBrandAssetsRoute: typeof PrivateBrandAssetsRoute
+  PrivateBrandBibleRoute: typeof PrivateBrandBibleRoute
+  PrivateCultureFailuresRoute: typeof PrivateCultureFailuresRoute
+  PrivateCultureFormulasRoute: typeof PrivateCultureFormulasRoute
+  PrivateCultureMasterPlanRoute: typeof PrivateCultureMasterPlanRoute
+  PrivateCulturePrinciplesRoute: typeof PrivateCulturePrinciplesRoute
+  PrivateCultureReadingsRoute: typeof PrivateCultureReadingsRoute
+  PrivateCultureVisionRoute: typeof PrivateCultureVisionRoute
+  PrivateGuidesBarRaiserMeetingRoute: typeof PrivateGuidesBarRaiserMeetingRoute
+  PrivateGuidesBeltSystemRoute: typeof PrivateGuidesBeltSystemRoute
+  PrivateGuidesRemotePolicyRoute: typeof PrivateGuidesRemotePolicyRoute
+  PrivateGuidesTimeOffPolicyRoute: typeof PrivateGuidesTimeOffPolicyRoute
+  PrivateIncentiveSchemeRoute: typeof PrivateIncentiveSchemeRoute
+  PrivateBrandIndexRoute: typeof PrivateBrandIndexRoute
+  PrivateCultureIndexRoute: typeof PrivateCultureIndexRoute
+  PrivateGuidesIndexRoute: typeof PrivateGuidesIndexRoute
+  PrivateIncentiveIndexRoute: typeof PrivateIncentiveIndexRoute
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateProfileRoute: PrivateProfileRoute,
   PrivateIndexRoute: PrivateIndexRoute,
+  PrivateBrandAssetsRoute: PrivateBrandAssetsRoute,
+  PrivateBrandBibleRoute: PrivateBrandBibleRoute,
+  PrivateCultureFailuresRoute: PrivateCultureFailuresRoute,
+  PrivateCultureFormulasRoute: PrivateCultureFormulasRoute,
+  PrivateCultureMasterPlanRoute: PrivateCultureMasterPlanRoute,
+  PrivateCulturePrinciplesRoute: PrivateCulturePrinciplesRoute,
+  PrivateCultureReadingsRoute: PrivateCultureReadingsRoute,
+  PrivateCultureVisionRoute: PrivateCultureVisionRoute,
+  PrivateGuidesBarRaiserMeetingRoute: PrivateGuidesBarRaiserMeetingRoute,
+  PrivateGuidesBeltSystemRoute: PrivateGuidesBeltSystemRoute,
+  PrivateGuidesRemotePolicyRoute: PrivateGuidesRemotePolicyRoute,
+  PrivateGuidesTimeOffPolicyRoute: PrivateGuidesTimeOffPolicyRoute,
+  PrivateIncentiveSchemeRoute: PrivateIncentiveSchemeRoute,
+  PrivateBrandIndexRoute: PrivateBrandIndexRoute,
+  PrivateCultureIndexRoute: PrivateCultureIndexRoute,
+  PrivateGuidesIndexRoute: PrivateGuidesIndexRoute,
+  PrivateIncentiveIndexRoute: PrivateIncentiveIndexRoute,
 }
 
 const PrivateRouteWithChildren =
@@ -186,6 +597,7 @@ const PublicRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   PrivateRoute: PrivateRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
+  ApiCandidateDocumentsRoute: ApiCandidateDocumentsRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
