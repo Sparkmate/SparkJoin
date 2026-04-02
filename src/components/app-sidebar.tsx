@@ -18,7 +18,9 @@ import { Button } from "./ui/button";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useRouteContext({ from: "/_private" });
   const trpc = useTRPC();
-  const { data: readPagesData } = useQuery(trpc.user.getReadPages.queryOptions());
+  const { data: readPagesData } = useQuery(
+    trpc.user.getReadPages.queryOptions()
+  );
   const { toggleSidebar } = useSidebar();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAdmin =

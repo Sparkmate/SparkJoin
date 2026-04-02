@@ -11,6 +11,7 @@ import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "#/components/theme-provider";
 import { Button } from "#/components/ui/button";
+import TanStackQueryProvider from "#/integrations/tanstack-query/root-provider";
 import type { TRPCRouter } from "#/integrations/trpc/router";
 import { getThemeServerFn } from "#/lib/theme";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
@@ -114,7 +115,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-background">
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <TanStackQueryProvider>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        </TanStackQueryProvider>
         <Toaster
           toastOptions={{
             style: {

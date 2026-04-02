@@ -16,17 +16,7 @@ export function getRouter() {
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
-
-    Wrap: (props: { children: ReactNode }) => {
-      return (
-        <TanstackQueryProvider context={context}>
-          {props.children}
-        </TanstackQueryProvider>
-      );
-    },
   });
-
-  setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient });
 
   return router;
 }
