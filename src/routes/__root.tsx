@@ -69,11 +69,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "SparkJoin",
+        title: "Join Sparkmate",
       },
       {
         name: "apple-mobile-web-app-title",
-        content: "SparkJoin",
+        content: "Join Sparkmate",
       },
     ],
     links: [
@@ -118,7 +118,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Toaster
           toastOptions={{
             style: {
-              backgroundColor: "var(--secondary)",
+              backgroundColor: "var(--primary)",
               color: "var(--background)",
               border: "00.5px solid var(--border)",
               borderRadius: "var(--radius)",
