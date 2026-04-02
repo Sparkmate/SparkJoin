@@ -1,0 +1,28 @@
+{
+  "projectName": "v2",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "bun",
+  "includeExamples": false,
+  "tailwind": true,
+  "addOnOptions": {
+    "drizzle": {
+      "database": "postgresql"
+    }
+  },
+  "envVarValues": {},
+  "git": false,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "biome",
+    "neon",
+    "drizzle",
+    "form",
+    "shadcn",
+    "tRPC",
+    "better-auth",
+    "tanstack-query"
+  ]
+}
