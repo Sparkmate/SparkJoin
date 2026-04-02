@@ -156,16 +156,18 @@ export const candidateProfileRouter = {
 				additionalContext: input.additionalContext,
 			};
 
+			const fullName = payload.fullName || ctx.user.name || "";
+
 			await ctx.db
 				.insert(candidateProfiles)
 				.values({
 					userId: ctx.user.id,
 					...payload,
-					fullName: payload.fullName || ctx.user.name || "",
+					fullName,
 				})
 				.onConflictDoUpdate({
 					target: candidateProfiles.userId,
-					set: payload,
+					set: { ...payload, fullName },
 				});
 
 			const [updated] = await ctx.db

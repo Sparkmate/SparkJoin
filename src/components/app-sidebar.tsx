@@ -37,7 +37,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       navGroups
         .filter(
           (group) =>
-            group.title !== "Dashboard & Metrics" && group.title !== "Admin"
+            group.title !== "Dashboard" && group.title !== "Admin"
         )
         .flatMap((group) => group.items),
     []

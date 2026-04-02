@@ -40,7 +40,7 @@ function RouteComponent() {
 
   const isContentPage = navGroups.some(
     (group) =>
-      group.title !== "Dashboard & Metrics" &&
+      group.title !== "Dashboard" &&
       group.title !== "Admin" &&
       group.items.some((item) => item.path === location.pathname)
   );
