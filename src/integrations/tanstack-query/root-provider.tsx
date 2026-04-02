@@ -76,11 +76,12 @@ export function getContext() {
 
 export default function TanstackQueryProvider({
   children,
+  context: routerContext,
 }: {
   children: ReactNode;
   context: ReturnType<typeof getContext>;
 }) {
-  const { queryClient } = getContext();
+  const { queryClient } = routerContext;
 
   return (
     <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
