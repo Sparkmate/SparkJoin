@@ -1,30 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-interface PubSubPushBody {
-	message?: {
-		data?: string;
-		messageId?: string;
-		publishTime?: string;
-		attributes?: Record<string, string>;
-	};
-	subscription?: string;
-}
-
-interface GmailPushData {
-	emailAddress?: string;
-	historyId?: string;
-}
-
-function decodePubSubMessageData(encodedData?: string): GmailPushData | null {
-	if (!encodedData) return null;
-
-	try {
-		const decoded = Buffer.from(encodedData, "base64").toString("utf8");
-		return JSON.parse(decoded) as GmailPushData;
-	} catch {
-		return null;
-	}
-}
+import { ingestGmailWebhook } from "#/integrations/gmail/ingestion";
+import { getGeminiClient } from "#/integrations/gmail/llm";
+import { decodePubSubMessageData } from "#/integrations/gmail/parser";
+import type { PubSubPushBody } from "#/integrations/gmail/types";
 
 export const Route = createFileRoute("/api/webhooks/gmail")({
 	server: {
@@ -35,7 +13,10 @@ export const Route = createFileRoute("/api/webhooks/gmail")({
 				try {
 					payload = (await request.json()) as PubSubPushBody;
 				} catch {
-					return Response.json({ error: "Invalid JSON payload" }, { status: 400 });
+					return Response.json(
+						{ error: "Invalid JSON payload" },
+						{ status: 400 },
+					);
 				}
 
 				if (!payload?.message?.data) {
@@ -46,6 +27,7 @@ export const Route = createFileRoute("/api/webhooks/gmail")({
 				}
 
 				const gmailData = decodePubSubMessageData(payload.message.data);
+
 				if (!gmailData?.emailAddress || !gmailData?.historyId) {
 					return Response.json(
 						{ error: "Invalid Gmail Pub/Sub message payload" },
@@ -53,14 +35,15 @@ export const Route = createFileRoute("/api/webhooks/gmail")({
 					);
 				}
 
-				// Keep this handler fast to avoid Pub/Sub retries; enqueue async work here later.
-				console.info("gmail-webhook-received", {
-					subscription: payload.subscription,
-					messageId: payload.message.messageId,
-					publishTime: payload.message.publishTime,
-					emailAddress: gmailData.emailAddress,
-					historyId: gmailData.historyId,
-				});
+				const ai = getGeminiClient();
+				if (!ai) {
+					console.warn("gmail-webhook-missing-gemini-api-key", {
+						requiredEnv: ["GEMINI_API_KEY", "GOOGLE_API_KEY"],
+					});
+					return new Response(null, { status: 204 });
+				}
+
+				await ingestGmailWebhook(gmailData, ai);
 
 				return new Response(null, { status: 204 });
 			},

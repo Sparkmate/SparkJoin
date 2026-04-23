@@ -1,8 +1,14 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
-import { desc, eq } from "drizzle-orm";
+import { asc, desc, eq, inArray } from "drizzle-orm";
 import z from "zod";
-import { user } from "#/db/schema";
+import {
+	candidateStepStatus,
+	candidates,
+	emails,
+	hiringSteps,
+	user,
+} from "#/db/schema";
 import { protectedProcedure } from "../init";
 
 export const userRouter = {
@@ -20,7 +26,7 @@ export const userRouter = {
 			});
 		}
 
-		const candidates = await ctx.db
+		const candidateUsers = await ctx.db
 			.select({
 				id: user.id,
 				name: user.name,
@@ -34,7 +40,125 @@ export const userRouter = {
 			.where(eq(user.role, "candidate"))
 			.orderBy(desc(user.createdAt));
 
-		return { candidates };
+		const userIds = candidateUsers.map((candidate) => candidate.id);
+
+		if (userIds.length === 0) {
+			return { candidates: [] };
+		}
+
+		const candidateProfiles = await ctx.db
+			.select({
+				id: candidates.id,
+				userId: candidates.userId,
+				fullName: candidates.fullName,
+				preferredName: candidates.preferredName,
+				phone: candidates.phone,
+				currentLocation: candidates.currentLocation,
+				position: candidates.position,
+				links: candidates.links,
+				proofOfWorkSummary: candidates.proofOfWorkSummary,
+				biggestAchievement: candidates.biggestAchievement,
+				whySparkmate: candidates.whySparkmate,
+				note: candidates.note,
+				createdAt: candidates.createdAt,
+				updatedAt: candidates.updatedAt,
+			})
+			.from(candidates)
+			.where(inArray(candidates.userId, userIds));
+
+		const candidateProfileByUserId = new Map(
+			candidateProfiles.map((profile) => [profile.userId, profile]),
+		);
+		const profileIds = candidateProfiles.map((profile) => profile.id);
+
+		const candidateEmails = profileIds.length
+			? await ctx.db
+					.select({
+						id: emails.id,
+						candidateId: emails.candidateId,
+						direction: emails.direction,
+						shortSummary: emails.shortSummary,
+						messageId: emails.messageId,
+						createdAt: emails.createdAt,
+						updatedAt: emails.updatedAt,
+					})
+					.from(emails)
+					.where(inArray(emails.candidateId, profileIds))
+					.orderBy(desc(emails.createdAt))
+			: [];
+
+		const allHiringSteps = await ctx.db
+			.select({
+				key: hiringSteps.key,
+				name: hiringSteps.name,
+				description: hiringSteps.description,
+				position: hiringSteps.position,
+				isTerminal: hiringSteps.isTerminal,
+			})
+			.from(hiringSteps)
+			.orderBy(asc(hiringSteps.position));
+
+		const statuses = profileIds.length
+			? await ctx.db
+					.select({
+						candidateId: candidateStepStatus.candidateId,
+						stepKey: candidateStepStatus.stepKey,
+						status: candidateStepStatus.status,
+						note: candidateStepStatus.note,
+						updatedAt: candidateStepStatus.updatedAt,
+					})
+					.from(candidateStepStatus)
+					.where(inArray(candidateStepStatus.candidateId, profileIds))
+			: [];
+
+		const emailsByCandidateId = new Map<number, (typeof candidateEmails)[number][]>();
+		for (const email of candidateEmails) {
+			const existing = emailsByCandidateId.get(email.candidateId) ?? [];
+			existing.push(email);
+			emailsByCandidateId.set(email.candidateId, existing);
+		}
+
+		const statusByCandidateAndStep = new Map<string, (typeof statuses)[number]>();
+		for (const status of statuses) {
+			statusByCandidateAndStep.set(
+				`${status.candidateId}:${status.stepKey}`,
+				status,
+			);
+		}
+
+		const enrichedCandidates = candidateUsers.map((candidate) => {
+			const profile = candidateProfileByUserId.get(candidate.id) ?? null;
+			const emailInteractions = profile
+				? emailsByCandidateId.get(profile.id) ?? []
+				: [];
+			const hiringProgress = profile
+				? allHiringSteps.map((step) => {
+						const currentStatus = statusByCandidateAndStep.get(
+							`${profile.id}:${step.key}`,
+						);
+
+						return {
+							stepKey: step.key,
+							name: step.name,
+							description: step.description,
+							position: step.position,
+							isTerminal: step.isTerminal,
+							status: currentStatus?.status ?? "pending",
+							note: currentStatus?.note ?? null,
+							updatedAt: currentStatus?.updatedAt ?? null,
+						};
+					})
+				: [];
+
+			return {
+				...candidate,
+				profile,
+				emailInteractions,
+				hiringProgress,
+			};
+		});
+
+		return { candidates: enrichedCandidates };
 	}),
 	banCandidate: protectedProcedure
 		.input(

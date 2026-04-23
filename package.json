@@ -22,6 +22,7 @@
     "auth:generate": "bun x @better-auth/cli generate --output ./src/db/auth-schema.ts"
   },
   "dependencies": {
+    "@google/genai": "^1.50.1",
     "@neondatabase/serverless": "^1.0.2",
     "@react-email/components": "1.0.11",
     "@tailwindcss/vite": "^4.1.18",
@@ -43,6 +44,7 @@
     "clsx": "^2.1.1",
     "drizzle-kit": "^0.31.9",
     "drizzle-orm": "^0.45.1",
+    "googleapis": "^171.4.0",
     "lucide-react": "^0.577.0",
     "motion": "^12.38.0",
     "nitro": "^3.0.260311-beta",
