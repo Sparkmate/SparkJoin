@@ -19,6 +19,8 @@ import { Route as PrivateIncentiveIndexRouteImport } from './routes/_private/inc
 import { Route as PrivateGuidesIndexRouteImport } from './routes/_private/guides/index'
 import { Route as PrivateCultureIndexRouteImport } from './routes/_private/culture/index'
 import { Route as PrivateBrandIndexRouteImport } from './routes/_private/brand/index'
+import { Route as PrivateAdminIndexRouteImport } from './routes/_private/admin/index'
+import { Route as ApiWebhooksGmailRouteImport } from './routes/api/webhooks/gmail'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as PublicLayoutLoginRouteImport } from './routes/_public/_layout.login'
@@ -35,6 +37,7 @@ import { Route as PrivateCultureFormulasRouteImport } from './routes/_private/cu
 import { Route as PrivateCultureFailuresRouteImport } from './routes/_private/culture/failures'
 import { Route as PrivateBrandBibleRouteImport } from './routes/_private/brand/bible'
 import { Route as PrivateBrandAssetsRouteImport } from './routes/_private/brand/assets'
+import { Route as PrivateAdminCandidatesRouteImport } from './routes/_private/admin/candidates'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -82,6 +85,16 @@ const PrivateBrandIndexRoute = PrivateBrandIndexRouteImport.update({
   id: '/brand/',
   path: '/brand/',
   getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateAdminIndexRoute = PrivateAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const ApiWebhooksGmailRoute = ApiWebhooksGmailRouteImport.update({
+  id: '/api/webhooks/gmail',
+  path: '/api/webhooks/gmail',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
@@ -168,11 +181,17 @@ const PrivateBrandAssetsRoute = PrivateBrandAssetsRouteImport.update({
   path: '/brand/assets',
   getParentRoute: () => PrivateRoute,
 } as any)
+const PrivateAdminCandidatesRoute = PrivateAdminCandidatesRouteImport.update({
+  id: '/admin/candidates',
+  path: '/admin/candidates',
+  getParentRoute: () => PrivateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PrivateIndexRoute
   '/profile': typeof PrivateProfileRoute
   '/api/candidate-documents': typeof ApiCandidateDocumentsRoute
+  '/admin/candidates': typeof PrivateAdminCandidatesRoute
   '/brand/assets': typeof PrivateBrandAssetsRoute
   '/brand/bible': typeof PrivateBrandBibleRoute
   '/culture/failures': typeof PrivateCultureFailuresRoute
@@ -189,6 +208,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof PublicLayoutLoginRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/api/webhooks/gmail': typeof ApiWebhooksGmailRoute
+  '/admin/': typeof PrivateAdminIndexRoute
   '/brand/': typeof PrivateBrandIndexRoute
   '/culture/': typeof PrivateCultureIndexRoute
   '/guides/': typeof PrivateGuidesIndexRoute
@@ -198,6 +219,7 @@ export interface FileRoutesByTo {
   '/': typeof PrivateIndexRoute
   '/profile': typeof PrivateProfileRoute
   '/api/candidate-documents': typeof ApiCandidateDocumentsRoute
+  '/admin/candidates': typeof PrivateAdminCandidatesRoute
   '/brand/assets': typeof PrivateBrandAssetsRoute
   '/brand/bible': typeof PrivateBrandBibleRoute
   '/culture/failures': typeof PrivateCultureFailuresRoute
@@ -214,6 +236,8 @@ export interface FileRoutesByTo {
   '/login': typeof PublicLayoutLoginRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/api/webhooks/gmail': typeof ApiWebhooksGmailRoute
+  '/admin': typeof PrivateAdminIndexRoute
   '/brand': typeof PrivateBrandIndexRoute
   '/culture': typeof PrivateCultureIndexRoute
   '/guides': typeof PrivateGuidesIndexRoute
@@ -227,6 +251,7 @@ export interface FileRoutesById {
   '/_public/_layout': typeof PublicLayoutRouteWithChildren
   '/api/candidate-documents': typeof ApiCandidateDocumentsRoute
   '/_private/': typeof PrivateIndexRoute
+  '/_private/admin/candidates': typeof PrivateAdminCandidatesRoute
   '/_private/brand/assets': typeof PrivateBrandAssetsRoute
   '/_private/brand/bible': typeof PrivateBrandBibleRoute
   '/_private/culture/failures': typeof PrivateCultureFailuresRoute
@@ -243,6 +268,8 @@ export interface FileRoutesById {
   '/_public/_layout/login': typeof PublicLayoutLoginRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/api/webhooks/gmail': typeof ApiWebhooksGmailRoute
+  '/_private/admin/': typeof PrivateAdminIndexRoute
   '/_private/brand/': typeof PrivateBrandIndexRoute
   '/_private/culture/': typeof PrivateCultureIndexRoute
   '/_private/guides/': typeof PrivateGuidesIndexRoute
@@ -254,6 +281,7 @@ export interface FileRouteTypes {
     | '/'
     | '/profile'
     | '/api/candidate-documents'
+    | '/admin/candidates'
     | '/brand/assets'
     | '/brand/bible'
     | '/culture/failures'
@@ -270,6 +298,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/api/webhooks/gmail'
+    | '/admin/'
     | '/brand/'
     | '/culture/'
     | '/guides/'
@@ -279,6 +309,7 @@ export interface FileRouteTypes {
     | '/'
     | '/profile'
     | '/api/candidate-documents'
+    | '/admin/candidates'
     | '/brand/assets'
     | '/brand/bible'
     | '/culture/failures'
@@ -295,6 +326,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/api/webhooks/gmail'
+    | '/admin'
     | '/brand'
     | '/culture'
     | '/guides'
@@ -307,6 +340,7 @@ export interface FileRouteTypes {
     | '/_public/_layout'
     | '/api/candidate-documents'
     | '/_private/'
+    | '/_private/admin/candidates'
     | '/_private/brand/assets'
     | '/_private/brand/bible'
     | '/_private/culture/failures'
@@ -323,6 +357,8 @@ export interface FileRouteTypes {
     | '/_public/_layout/login'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/api/webhooks/gmail'
+    | '/_private/admin/'
     | '/_private/brand/'
     | '/_private/culture/'
     | '/_private/guides/'
@@ -335,6 +371,7 @@ export interface RootRouteChildren {
   ApiCandidateDocumentsRoute: typeof ApiCandidateDocumentsRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
+  ApiWebhooksGmailRoute: typeof ApiWebhooksGmailRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -408,6 +445,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/brand/'
       preLoaderRoute: typeof PrivateBrandIndexRouteImport
       parentRoute: typeof PrivateRoute
+    }
+    '/_private/admin/': {
+      id: '/_private/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof PrivateAdminIndexRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/api/webhooks/gmail': {
+      id: '/api/webhooks/gmail'
+      path: '/api/webhooks/gmail'
+      fullPath: '/api/webhooks/gmail'
+      preLoaderRoute: typeof ApiWebhooksGmailRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/trpc/$': {
       id: '/api/trpc/$'
@@ -521,12 +572,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateBrandAssetsRouteImport
       parentRoute: typeof PrivateRoute
     }
+    '/_private/admin/candidates': {
+      id: '/_private/admin/candidates'
+      path: '/admin/candidates'
+      fullPath: '/admin/candidates'
+      preLoaderRoute: typeof PrivateAdminCandidatesRouteImport
+      parentRoute: typeof PrivateRoute
+    }
   }
 }
 
 interface PrivateRouteChildren {
   PrivateProfileRoute: typeof PrivateProfileRoute
   PrivateIndexRoute: typeof PrivateIndexRoute
+  PrivateAdminCandidatesRoute: typeof PrivateAdminCandidatesRoute
   PrivateBrandAssetsRoute: typeof PrivateBrandAssetsRoute
   PrivateBrandBibleRoute: typeof PrivateBrandBibleRoute
   PrivateCultureFailuresRoute: typeof PrivateCultureFailuresRoute
@@ -540,6 +599,7 @@ interface PrivateRouteChildren {
   PrivateGuidesRemotePolicyRoute: typeof PrivateGuidesRemotePolicyRoute
   PrivateGuidesTimeOffPolicyRoute: typeof PrivateGuidesTimeOffPolicyRoute
   PrivateIncentiveSchemeRoute: typeof PrivateIncentiveSchemeRoute
+  PrivateAdminIndexRoute: typeof PrivateAdminIndexRoute
   PrivateBrandIndexRoute: typeof PrivateBrandIndexRoute
   PrivateCultureIndexRoute: typeof PrivateCultureIndexRoute
   PrivateGuidesIndexRoute: typeof PrivateGuidesIndexRoute
@@ -549,6 +609,7 @@ interface PrivateRouteChildren {
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateProfileRoute: PrivateProfileRoute,
   PrivateIndexRoute: PrivateIndexRoute,
+  PrivateAdminCandidatesRoute: PrivateAdminCandidatesRoute,
   PrivateBrandAssetsRoute: PrivateBrandAssetsRoute,
   PrivateBrandBibleRoute: PrivateBrandBibleRoute,
   PrivateCultureFailuresRoute: PrivateCultureFailuresRoute,
@@ -562,6 +623,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateGuidesRemotePolicyRoute: PrivateGuidesRemotePolicyRoute,
   PrivateGuidesTimeOffPolicyRoute: PrivateGuidesTimeOffPolicyRoute,
   PrivateIncentiveSchemeRoute: PrivateIncentiveSchemeRoute,
+  PrivateAdminIndexRoute: PrivateAdminIndexRoute,
   PrivateBrandIndexRoute: PrivateBrandIndexRoute,
   PrivateCultureIndexRoute: PrivateCultureIndexRoute,
   PrivateGuidesIndexRoute: PrivateGuidesIndexRoute,
@@ -600,6 +662,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiCandidateDocumentsRoute: ApiCandidateDocumentsRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
+  ApiWebhooksGmailRoute: ApiWebhooksGmailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -17,7 +17,7 @@ import {
 import { getSession } from "@/lib/auth.functions";
 
 export const Route = createFileRoute("/_private")({
-  beforeLoad: async ({ location }) => {
+  beforeLoad: async ({ location, context }) => {
     const session = await getSession();
 
     if (!session) {
@@ -27,7 +27,16 @@ export const Route = createFileRoute("/_private")({
       });
     }
 
-    return { user: session.user };
+    const roleResult = await context.queryClient.ensureQueryData(
+      context.trpc.user.getRole.queryOptions()
+    );
+    const role = roleResult.role;
+
+    if (location.pathname.startsWith("/admin") && role !== "admin") {
+      throw redirect({ to: "/" });
+    }
+
+    return { user: session.user, role };
   },
   component: RouteComponent,
 });
@@ -40,7 +49,7 @@ function RouteComponent() {
 
   const isContentPage = navGroups.some(
     (group) =>
-      group.title !== "Dashboard" &&
+      group.title !== "YOUR APPLICATION" &&
       group.title !== "Admin" &&
       group.items.some((item) => item.path === location.pathname)
   );
@@ -51,10 +60,10 @@ function RouteComponent() {
     }
 
     // Update page title
-    let pageTitle = "Dashboard";
+    let pageTitle = "YOUR APPLICATION";
     if (location.pathname !== "/") {
       for (const group of navGroups) {
-        if (group.title !== "Dashboard" && group.title !== "Admin") {
+        if (group.title !== "YOUR APPLICATION" && group.title !== "Admin") {
           const item = group.items.find((i) => i.path === location.pathname);
           if (item) {
             pageTitle = item.name;

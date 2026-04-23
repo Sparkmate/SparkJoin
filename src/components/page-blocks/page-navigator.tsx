@@ -51,7 +51,7 @@ export function PageNavigation() {
   // Except Home which is '/' and is in group.items. We probably don't want this on Home.
   if (
     !currentGroup ||
-    currentGroup.title === "Dashboard" ||
+    currentGroup.title === "YOUR APPLICATION" ||
     currentGroup.title === "Admin"
   ) {
     return null;

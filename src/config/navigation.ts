@@ -1,7 +1,7 @@
 import {
+  Briefcase,
   BookOpen,
   FileText,
-  Home,
   Palette,
   Settings,
   TrendingUp,
@@ -9,8 +9,8 @@ import {
 
 export const navGroups = [
   {
-    title: "Dashboard",
-    icon: Home,
+    title: "YOUR APPLICATION",
+    icon: Briefcase,
     path: "/",
     items: [],
   },
@@ -86,9 +86,10 @@ export const navGroups = [
   {
     title: "Admin",
     icon: Settings,
+    path: "/admin",
     items: [
       {
-        id: "admin-teammates",
+        id: "admin-candidates",
         name: "Candidates",
         path: "/admin/candidates",
       },

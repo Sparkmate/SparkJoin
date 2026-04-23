@@ -16,18 +16,14 @@ import { navGroups } from "@/config/navigation";
 import { Button } from "./ui/button";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useRouteContext({ from: "/_private" });
+  const { user, role } = useRouteContext({ from: "/_private" });
   const trpc = useTRPC();
   const { data: readPagesData } = useQuery(
     trpc.user.getReadPages.queryOptions()
   );
   const { toggleSidebar } = useSidebar();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isAdmin =
-    user?.email === "morgan@sparkmate.com" ||
-    user?.email === "maxime@sparkmate.com" ||
-    user?.email === "ampy@sparkmate.com" ||
-    user?.email === "yago@sparkmate.com";
+  const isAdmin = role === "admin";
 
   const visibleGroups = React.useMemo(
     () => navGroups.filter((group) => group.title !== "Admin" || isAdmin),
@@ -39,7 +35,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       navGroups
         .filter(
           (group) =>
-            group.title !== "Dashboard" && group.title !== "Admin"
+            group.title !== "YOUR APPLICATION" && group.title !== "Admin"
         )
         .flatMap((group) => group.items),
     []

@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1776930762453,
+      "tag": "0000_tired_the_stranger",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776934360000,
+      "tag": "0001_candidate_model_simplification",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776993000000,
+      "tag": "0002_seed_hiring_steps",
+      "breakpoints": true
+    }
+  ]
+}
