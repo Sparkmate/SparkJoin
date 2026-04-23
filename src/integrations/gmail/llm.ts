@@ -55,7 +55,7 @@ export async function generateAndParseJson<T extends z.ZodTypeAny>(
 ): Promise<z.infer<T> | null> {
 	try {
 		const response = await ai.models.generateContent({
-			model: "gemini-2.5-flash",
+			model: "gemini-3.1-pro",
 			contents: prompt,
 		});
 
