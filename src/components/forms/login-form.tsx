@@ -5,18 +5,18 @@ import type React from "react";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
+	Button,
 	Field,
 	FieldError,
 	FieldGroup,
 	FieldLabel,
 	FieldSeparator,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+	Input,
+	Spinner,
+} from "@spkm/ui";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import { Spinner } from "../ui/spinner";
 
 const formSchema = z.object({
 	email: z.email("Invalid email address"),

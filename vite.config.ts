@@ -26,6 +26,16 @@ const config = defineConfig({
     tanstackStart(),
     viteReact(),
   ],
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // @spkm/ui dependency graph emits thousands of "use client"
+        // module-level-directive warnings, which add heavy log/noise cost.
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE") return;
+        warn(warning);
+      },
+    },
+  },
 });
 
 export default config;

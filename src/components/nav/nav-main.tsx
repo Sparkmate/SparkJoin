@@ -1,13 +1,10 @@
 import { ChevronDown, ChevronRight, type LucideIcon } from "lucide-react";
 import * as React from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
 	SidebarGroup,
 	SidebarMenu,
 	SidebarMenuButton,
@@ -16,7 +13,7 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 	useSidebar,
-} from "@/components/ui/sidebar";
+} from "@spkm/ui";
 
 export function NavMain({
 	groups,
@@ -71,8 +68,7 @@ export function NavMain({
 				setExpandedGroup(current.title);
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pathname]);
+	}, [findGroupForPath, pathname]);
 
 	const isGroupActive = (group: (typeof groups)[number]) => {
 		const groupPath = group.path ?? `/${group.title.toLowerCase()}`;

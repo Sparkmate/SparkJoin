@@ -1,0 +1,24 @@
+@import "streamdown/styles.css";
+
+@source "../node_modules/streamdown/dist/*.js";
+
+@layer utilities {
+  .animate-pulse-slow {
+    animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(241, 254, 6, 0.7);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(241, 254, 6, 0);
+  }
+}

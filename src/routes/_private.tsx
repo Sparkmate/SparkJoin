@@ -9,11 +9,7 @@ import { PageNavigation } from "#/components/page-blocks/page-navigator";
 import { navGroups } from "#/config/navigation";
 import { useIsMobile } from "#/hooks/use-mobile";
 import { AppSidebar } from "@/components/app-sidebar";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@spkm/ui";
 import { getSession } from "@/lib/auth.functions";
 
 export const Route = createFileRoute("/_private")({

@@ -15,22 +15,22 @@ import { Fragment, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { PageHeader } from "#/components/page-blocks/page-header";
 import { useTRPC } from "#/integrations/trpc/react";
-import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
+	Button,
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
 	Table,
 	TableBody,
 	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@/components/ui/table";
-import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@spkm/ui";
 import { cn } from "@/lib/utils";
 
 type BanReason = "rejected" | "other";

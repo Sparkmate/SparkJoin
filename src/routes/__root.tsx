@@ -1,3 +1,5 @@
+import "@spkm/ui/styles.css";
+import "../app.css";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
@@ -8,14 +10,13 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import { Button } from "@spkm/ui";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "#/components/theme-provider";
-import { Button } from "#/components/ui/button";
 import TanStackQueryProvider from "#/integrations/tanstack-query/root-provider";
 import type { TRPCRouter } from "#/integrations/trpc/router";
 import { getThemeServerFn } from "#/lib/theme";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
-import appCss from "../styles.css?url";
 
 function NotFound() {
 	return (
@@ -79,10 +80,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 		],
 		links: [
 			{
-				rel: "stylesheet",
-				href: appCss,
-			},
-			{
 				rel: "apple-touch-icon",
 				href: "https://cdn.brandfetch.io/id0nvnoUuq/theme/light/symbol.svg?c=1bxkv1dyj3uktf70hkd0yurufsb0MtP0E4s",
 			},
@@ -114,7 +111,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="bg-background">
+			<body>
 				<TanStackQueryProvider>
 					<ThemeProvider theme={theme}>{children}</ThemeProvider>
 				</TanStackQueryProvider>

@@ -5,8 +5,7 @@ import { type FormEvent, useId, useState } from "react";
 import { toast } from "sonner";
 import { PageHeader } from "#/components/page-blocks/page-header";
 import { useTRPC } from "#/integrations/trpc/react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button, Input } from "@spkm/ui";
 
 type ProfileFormState = {
 	fullName: string;

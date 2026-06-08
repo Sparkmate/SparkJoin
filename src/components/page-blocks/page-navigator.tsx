@@ -9,7 +9,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Circle, Loader2 } from "lucide-rea
 import { useState } from "react";
 import { navGroups } from "../../config/navigation";
 import { useTRPC } from "#/integrations/trpc/react";
-import { Button } from "../ui/button";
+import { Button } from "@spkm/ui";
 
 export function PageNavigation() {
   const location = useLocation();
